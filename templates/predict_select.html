@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block content %}
+<h4>Select target column(s)</h4>
+<form method="post" action="{% url 'predict_run' %}">
+  {% csrf_token %}
+  {% for c in fields %}
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="{{c}}" name="targets" id="chk_{{forloop.counter}}">
+      <label class="form-check-label" for="chk_{{forloop.counter}}">{{c}}</label>
+    </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-primary mt-2">Proceed to Predict</button>
+</form>
+{% endblock %}

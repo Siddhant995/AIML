@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block content %}
+<h3>Dataset Overview</h3>
+<p>Nulls: {{nulls}} ({{null_pct}}%), Duplicates: {{dupes}} ({{dupes_pct}}%)</p>
+<div class="row">
+  <div class="col-md-6">
+    <h5>Fields</h5>
+    <table class="table">
+      <thead><tr><th>Field</th><th>Datatype</th></tr></thead>
+      <tbody>
+      {% for f in fields %}
+        <tr>
+          <td><a class="btn btn-link" href="{% url 'column' f.col %}">{{ f.col }}</a></td>
+          <td>{{ f.dtype }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <a class="btn btn-primary mb-2" href="{% url 'predict_select' %}">Go To Predict Section</a><br/>
+    <a class="btn btn-secondary" href="{% url 'visualize' %}">Visualize</a>
+  </div>
+</div>
+<hr/>
+<h5>Data Description</h5>
+{{ desc_html|safe }}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block content %}
+<h4>AutoML Results</h4>
+<p>Problem type: {{ automl_res.problem_type }}</p>
+<p>Best model: {{ automl_res.best_model_name }} with score {{ automl_res.best_score }}</p>
+<h5>All tried models</h5>
+<ul>
+  {% for r in automl_res.results %}
+    <!-- <li>{{ r.model }} - {% if r.score is defined %}score: {{r.score}}{% else %}error: {{r.error}}{% endif %}</li> -->
+    <li>{{ r.model }} - {% if r.score or r.score == 0 %}score: {{ r.score }}{% elif r.error %}error: {{ r.error }}{% else %}no result{% endif %}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

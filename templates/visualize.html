@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block content %}
+<h4>Plot two columns</h4>
+<form id="plotForm" method="post">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col">
+      <select name="x_col" id="x_col" class="form-select">
+        <option value="">Select X</option>
+        {% for f in fields %}<option value="{{f}}">{{f}}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="col">
+      <select name="y_col" id="y_col" class="form-select">
+        <option value="">Select Y</option>
+        {% for f in fields %}<option value="{{f}}">{{f}}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="col">
+      <button type="submit" class="btn btn-primary">Plot</button>
+    </div>
+  </div>
+</form>
+<div id="plot" style="height:400px;"></div>
+
+<script>
+document.getElementById("plotForm").addEventListener("submit", async function(e){
+  e.preventDefault();
+  const x = document.getElementById("x_col").value;
+  const y = document.getElementById("y_col").value;
+  if(!x || !y){ alert("choose both"); return; }
+  const resp = await fetch("", { method: "POST", headers: {"Content-Type":"application/x-www-form-urlencoded","X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value}, body: new URLSearchParams({x_col:x, y_col:y})});
+  const json = await resp.json();
+  const trace = { x: json.x, y: json.y, mode:"markers", type:"scatter" };
+  const layout = { title: json.y_label + " vs " + json.x_label, xaxis:{title:json.x_label}, yaxis:{title:json.y_label} };
+  Plotly.newPlot("plot", [trace], layout);
+});
+</script>
+{% endblock %}

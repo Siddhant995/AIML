@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block content %}
+<h4>Column: {{col}}</h4>
+<p>Nulls: {{nulls}} | Duplicates: {{dupes}}</p>
+<form method="post">
+  {% csrf_token %}
+  <button name="action" value="unique" class="btn btn-outline-primary">Unique Values</button>
+  <hr/>
+  <h5>Handle null values</h5>
+  <button name="action" value="fill_zero" class="btn btn-sm btn-warning">Zeroes</button>
+  <button name="action" value="fill_mean" class="btn btn-sm btn-warning">Mean</button>
+  <button name="action" value="fill_median" class="btn btn-sm btn-warning">Median</button>
+  <button name="action" value="fill_mode" class="btn btn-sm btn-warning">Mode</button>
+</form>
+
+{% if unique_vals %}
+  <h6 class="mt-3">Unique values</h6>
+  <pre>{{ unique_vals | join:", " }}</pre>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block content %}
+<form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label">Upload CSV / Excel</label>
+    <input class="form-control" type="file" name="file" required/>
+  </div>
+  <button class="btn btn-primary" type="submit">Upload File</button>
+</form>
+<hr/>
+{% endblock %}
