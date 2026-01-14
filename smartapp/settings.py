@@ -3,6 +3,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'replace-this-in-prod'
 DEBUG = False
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    "https://aiml-1-p8wz.onrender.com"
+]
 INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sessions',
