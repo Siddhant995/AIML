@@ -6,12 +6,16 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sessions',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
     'core',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
 ]
 ROOT_URLCONF = 'smartapp.urls'
 TEMPLATES = [
